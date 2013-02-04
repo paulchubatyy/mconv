@@ -4,7 +4,7 @@
  */
 namespace Measure\Volume;
 use Measure\Unit;
-class Liter
+class Liter extends Unit
 {
     const RATE = 1000;
 }

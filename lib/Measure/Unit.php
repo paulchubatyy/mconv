@@ -48,7 +48,7 @@ abstract class Unit
             throw new \ErrorException("Cannot convert {$this->getType()} to {$to->getType()}");
         }
         // Simple as that
-        return $this->getQuantity() / $this::RATE * $to::RATE;
+        return $this->getQuantity() / $to::RATE * $this::RATE;
     }
 
     /**
