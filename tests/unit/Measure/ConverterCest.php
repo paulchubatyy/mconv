@@ -11,6 +11,7 @@ class ConverterCest
         array(3, 'l', 'ml', 3000),
         array(1.22, 'ml', 'fl oz', .041253148934012),
         array(.98, 'fl oz', 'gal', .0076562459548635),
+        array(1, 'pc', 'piece', 1),
     );
 
     // Test for Converter.convert

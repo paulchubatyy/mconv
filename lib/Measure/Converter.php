@@ -27,6 +27,7 @@ class Converter
         'milliliter' => array('ml', 'milliliter'),
         'pint' => array('pt', 'pint'),
         'quart' => array('qt', 'quart'),
+        'piece' => array('pc', 'pieces', 'piece'),
     );
 
     /**
@@ -36,6 +37,7 @@ class Converter
     private $types = array(
         'volume' => array('fluidOunce', 'gallon', 'liter', 'milliliter', 'pint', 'quart'),
         'weight' => array('gram', 'kilogram', 'ounce', 'pound'),
+        'piece' => array('piece'),
     );
 
     /**
