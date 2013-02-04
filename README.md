@@ -6,4 +6,4 @@ Measure converter for PHP. Currently very early alpha version. Uses codeception 
 Licence
 -------
 
-MIT License. See [License](/LICENSE "License").
+MIT License. See [License](/LICENSE.md "License").
