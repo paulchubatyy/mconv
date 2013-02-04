@@ -1,0 +1,17 @@
+{
+    "name": "xobb/mconv",
+    "description": "Unit Conversion utility",
+    "require-dev": {
+        "codeception/codeception": "dev-stable"
+    },
+    "authors": [
+        {
+            "name": "Paul Chubatyy",
+            "email": "xobb@citylance.biz"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+
+    }
+}
