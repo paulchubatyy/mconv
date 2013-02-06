@@ -7,14 +7,40 @@
 namespace Measure;
 abstract class Unit
 {
+    /** @var array Fast rates for conversion */
+    protected $fastRates = array();
+
     /** @var float */
     private $quantity;
 
     /** @var string The measure type */
     private $type;
 
+    private $precision = 2;
+
+    /** string measure name */
+    const NAME = 'measure name';
+
     /** int conversion rate the to the standard measure */
     const RATE = 1;
+
+    /**
+     * @param $precision
+     * @return Unit
+     */
+    public function setPrecision($precision)
+    {
+        $this->precision = $precision;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrecision()
+    {
+        return $this->precision;
+    }
 
     /**
      * Set quantity.
@@ -47,8 +73,15 @@ abstract class Unit
         if ($this->getType() != $to->getType()) {
             throw new \ErrorException("Cannot convert {$this->getType()} to {$to->getType()}");
         }
-        // Simple as that
-        return $this->getQuantity() / $to::RATE * $this::RATE;
+
+        // Do we have the fast conversion rate set?
+        if (array_key_exists($to::NAME, $this->fastRates)) {
+            $result = $this->getQuantity() * $this->fastRates[$to::NAME];
+        } else {
+            // Convert through the universal standard
+            $result = $this->getQuantity() / $to::RATE * $this::RATE;
+        }
+        return round($result, $this->getPrecision());
     }
 
     /**

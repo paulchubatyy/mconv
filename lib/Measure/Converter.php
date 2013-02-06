@@ -40,6 +40,23 @@ class Converter
         'piece' => array('piece'),
     );
 
+    /** @var int precision when converting */
+    private $precision = 2;
+
+    public function __construct($precision = 2)
+    {
+        $this->precision = $precision;
+    }
+
+    /**
+     * Get the precision of the converter.
+     * @return int
+     */
+    public function getPrecision()
+    {
+        return $this->precision;
+    }
+
     /**
      * Convert one unit to another
      * @param int $quantity
@@ -54,7 +71,9 @@ class Converter
         $from = $this->getUnit($from);
         /** @var $to Unit */
         $to = $this->getUnit($to);
-        return $from->setQuantity($quantity)->convertTo($to);
+        return $from->setPrecision($this->precision)
+            ->setQuantity($quantity)
+            ->convertTo($to);
     }
 
 
