@@ -43,9 +43,23 @@ class Converter
     /** @var int precision when converting */
     private $precision = 2;
 
-    public function __construct($precision = 2)
+    /** @var array Simple cache of unit objects */
+    private $unitCache = array();
+
+    public function __construct($precision = null)
+    {
+        if (!is_null($precision))
+            $this->setPrecision($precision);
+    }
+
+    /**
+     * @param int $precision
+     * @return Converter
+     */
+    public function setPrecision($precision)
     {
         $this->precision = $precision;
+        return $this;
     }
 
     /**
@@ -97,6 +111,10 @@ class Converter
             throw new \ErrorException("I don't know how to work with {$acronym}");
         }
 
+        if (array_key_exists($unit, $this->unitCache)) {
+            return $this->unitCache[$unit];
+        }
+
         $type = null;
         foreach ($this->types as $typeName => $units) {
             if (in_array($unit, $units)) {
@@ -111,6 +129,7 @@ class Converter
         $unit = ucfirst($unit);
 
         $className = "\\Measure\\{$type}\\{$unit}";
-        return new $className;
+        $this->unitCache[lcfirst($unit)] = new $className;
+        return $this->unitCache[lcfirst($unit)];
     }
 }
