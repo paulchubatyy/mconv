@@ -9,22 +9,29 @@ class ConverterCest
         array(12, 'lb', 'oz', 192),
         array(2.5, 'kg', 'g', 2500),
         array(3, 'l', 'ml', 3000),
-        array(1.22, 'ml', 'fl oz', .041253148934012),
-        array(.98, 'fl oz', 'gal', .0076562459548635),
+        array(29.5735, 'ml', 'fl oz', 1),
+        array(.98, 'fl oz', 'gal', .007),
         array(1, 'pc', 'piece', 1),
     );
 
     // Test for Converter.convert
     public function convert(\CodeGuy $I)
     {
-        $I->wantTo("test the conversion of different unites");
+        $I->wantTo("test the conversion of different units");
         $I->haveStub($converter = Stub::make($this->class));
+        $I->amTestingMethod('\Measure\Converter.setPrecision');
+        $I->executeTestedMethodOn($converter, 3);
+        $I->seeResultIs(get_class($converter));
+        $I->amTestingMethod('\Measure\Converter.getPrecision');
+        $I->executeTestedMethodOn($converter);
+        $I->seeResultEquals(3);
         foreach ($this->tests as $values) {
             list($quantity, $from, $to, $result) = $values;
+            $I->amTestingMethod('\Measure\Converter.convert');
             $I->executeTestedMethodOn($converter, $quantity, $from, $to);
-            $I->seeResultEquals($result);
+            $I->seeResultEquals(round($result, $converter->getPrecision()));
             $I->executeTestedMethodOn($converter, $result, $to, $from);
-            $I->seeResultEquals($quantity);
+            $I->seeResultEquals(round($quantity, $converter->getPrecision()));
         }
     }
     // Another test for Converter.convert
